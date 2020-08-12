@@ -6,26 +6,27 @@ require("dotenv/config");
 const app = express();
 
 //CONNECT TO DB
-mongoose.connect(
-  process.env.DB_CONNECTION,
-  {
+mongoose
+  .connect(process.env.DB_CONNECTION, {
     useUnifiedTopology: true,
     useNewUrlParser: true,
-  },
-  () => {
-    console.log("DB Connected!");
-  }
-);
+  })
+  .then((res) => console.log("DB Connected!"))
+  .catch((err) => {
+    console.log(err);
+  });
 
 //ROUTES
-const urlRoutes = require("./routes/urlshortening");
+const incrShortenURL = require("./routes/incrShorteningURL");
+const randShortenURL = require("./routes/randShorteningURL");
 const homeRoute = require("./routes/home");
 
 //MIDDLEWARE
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use("/api/shorten", urlRoutes);
+app.use("/api/incr", incrShortenURL);
+app.use("/api/rand", randShortenURL);
 app.use("/", homeRoute);
 
 //START SERVER
