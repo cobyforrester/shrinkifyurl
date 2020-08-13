@@ -6,14 +6,25 @@ const RandURL = require("../models/RandURL");
 router.get("*", async (req, res) => {
   try {
     let url = req.url.slice(1, req.url.length);
-    const results = await RandURL.find({ shorturl: url });
-    if (results.length > 0) {
-      res.redirect(results[0].longurl);
+    const urlQs = await RandURL.findOne({ shorturl: url });
+    if (urlQs) {
+      let longurl = urlQs.longurl;
+      let http = longurl.slice(0, 7);
+      let https = longurl.slice(0, 8);
+      if (https !== "https://" && http !== "http://") {
+        longurl = "http://" + longurl;
+      }
+      res.status(302).redirect(longurl);
     } else {
-      res.json();
+      res.send(
+        "<h1 style='text-align:center; margin-top: 20px;'>Page Not Found</h1>"
+      );
     }
   } catch (err) {
-    res.json(err);
+    console.log(err);
+    res.send(
+      "<h1 style='text-align:center; margin-top: 20px;'>An Error Occurred</h1>"
+    );
   }
 });
 
