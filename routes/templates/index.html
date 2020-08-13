@@ -219,9 +219,13 @@
         body: JSON.stringify({ longurl: longurl, n: n }),
       };
       try {
-        let response = await fetch("api/rand", options); // resolves with response headers
+        let response = await fetch(
+          "https://shrinkifyurl.herokuapp.com/api/rand",
+          options
+        ); // resolves with response headers
         let result = await response.json(); // read body as json
-        let shortenedURL = "http://localhost:8080/" + result.shorturl;
+        let shortenedURL =
+          "https://shrinkifyurl.herokuapp.com/" + result.shorturl;
         let addUrlToHtml = `<div>Generated URL</div> <div>${shortenedURL}</div>`;
         addUrlToHtml += `<button id="copy-btn-id" class="btn btn-secondary btn-copy" onclick="copyText('${shortenedURL}')">Copy to Clipboard</button>`;
         document.getElementById("shorturl").innerHTML = addUrlToHtml;
