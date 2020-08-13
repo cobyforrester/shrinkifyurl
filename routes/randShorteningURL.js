@@ -20,11 +20,17 @@ router.post("/", async (req, res) => {
     longurl: longurl,
     shorturl: shorturl,
   });
-  try {
-    const savedURL = await elem.save();
-    res.json(savedURL);
-  } catch (err) {
-    res.json(err);
+  let isAdded = false;
+  while (1) {
+    try {
+      const savedURL = await elem.save();
+      isAdded = false;
+      res.json(savedURL);
+      return;
+    } catch (err) {
+      console.log("It failed");
+      elem.shorturl = await createShortenedURL(longurl, 5);
+    }
   }
 });
 
@@ -74,7 +80,7 @@ const createHash = (longurl) => {
 };
 
 const mapChars = () => {
-  let total = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let total = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
   let mapOfChars = {};
   for (let i = 0; i < total.length; i++) {
     mapOfChars[i] = total[i];
