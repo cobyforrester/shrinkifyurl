@@ -6,17 +6,19 @@ const RandURL = require("../models/RandURL");
 
 router.post("/", async (req, res) => {
   try {
-    const longurl = await RandURL.find({ longurl: req.body.longurl });
-    if (longurl.length > 0) {
-      res.json(longurl[0]);
+    const urlItem = await RandURL.findOne({ longurl: req.body.longurl });
+    if (urlItem) {
+      res.json(urlItem);
       return;
     }
   } catch (err) {
     console.log(err);
   }
+  let longurl = req.body.longurl;
+  let shorturl = await createShortenedURL(longurl, 5);
   const elem = new RandURL({
-    longurl: req.body.longurl,
-    shorturl: createShortenedURL(req.body.longurl),
+    longurl: longurl,
+    shorturl: shorturl,
   });
   try {
     const savedURL = await elem.save();
@@ -26,9 +28,16 @@ router.post("/", async (req, res) => {
   }
 });
 
-const createShortenedURL = (longurl) => {
+const createShortenedURL = async (longurl, n) => {
   let shorturl = createHash(longurl);
-  return shorturl;
+  let shorturlFnl = shorturl.slice(shorturl.length - n, shorturl.length);
+  let urlItem = await RandURL.findOne({ shorturl: shorturlFnl });
+  while (urlItem) {
+    n += 1;
+    shorturlFnl = shorturl.slice(shorturl.length - n, shorturl.length);
+    urlItem = await RandURL.findOne({ shorturl: shorturlFnl });
+  }
+  return shorturlFnl;
 };
 
 const generateHashAsInt = (longurl) => {
@@ -43,7 +52,7 @@ const createHash = (longurl) => {
   let strFnl = "";
 
   while (Math.pow(62, n) < hash) {
-    //calculates number of chars it will be
+    //calculates number of chars it will be so no padded values and no missing
     n += 1;
   }
   for (let i = 0; i < n; i++) {
@@ -72,29 +81,5 @@ const mapChars = () => {
   }
   return mapOfChars;
 };
-
-/*
-for i in range(n):
-p = n - i - 1
-if pow(62, p) <= varId:
-    mult = 1
-    while mult * pow(62, p) < varId:
-        mult += 1
-    mult -= 1
-    varId -= mult * pow(62, p)
-    strFnl += mapChars[mult]
-else:
-    strFnl += "0"
-return strFnl
-def mapCharsDic():
-lAlph = 'abcdefghijklmnopqrstuvwxyz'
-uAlph = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-nums = '0123456789'
-total = nums+lAlph+uAlph
-mapChars = {}
-for i, val in enumerate(total):
-mapChars[i] = val
-return mapChars
-*/
 
 module.exports = router;
