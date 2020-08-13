@@ -8,6 +8,12 @@
         font-family: Lato;
         background-color: rgb(233, 233, 233) !important;
       }
+
+      #alert-bad-url {
+        background-color: #f8d7da !important;
+        flex: auto;
+        max-width: 500px;
+      }
       .main-header {
         font-size: 3rem;
         font-weight: 700;
@@ -26,12 +32,20 @@
       .url-input-field {
         height: 50px;
         background-color: white !important;
+        /* FOR SAFARI INPUT */
+        -webkit-user-select: text !important; /* Chrome, Opera, Safari */
+        -moz-user-select: text !important; /* Firefox 2+ */
+        -ms-user-select: text !important; /* IE 10+ */
+        user-select: text !important; /* Standard syntax */
       }
       .url-input-field:hover {
         border-width: 2px;
         border-color: grey;
       }
       .url-input-field:focus {
+        border-width: 2px !important;
+        border-color: grey !important;
+        box-shadow: none !important;
       }
       .url-submit-btn {
         height: 50px;
@@ -50,12 +64,48 @@
       .btn-copy:hover {
         background-color: #5a6268 !important;
       }
+      .copied-check {
+        background-color: transparent !important;
+      }
+
+      @media screen and (max-width: 500px) {
+        .main-header {
+          font-size: 2.5rem;
+        }
+        .url-submit-btn {
+          flex-wrap: wrap;
+          width: 70px;
+        }
+        .url-input-field {
+          width: 100px;
+          background-color: white !important;
+        }
+
+        .label-url {
+          font-size: 1.4rem;
+          font-weight: 400;
+          color: black;
+          margin: 0 0 1rem;
+        }
+      }
+      @media screen and (max-width: 350px) {
+        .label-url {
+          font-size: 1rem;
+          font-weight: 400;
+          color: black;
+          margin: 0 0 1rem;
+        }
+      }
     </style>
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
       crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
   </head>
   <body class="text-center">
@@ -70,9 +120,9 @@
 
       <!-- INPUT ROW -->
       <div class="row justify-content-center">
-        <div class="col-sm-8 btn-group">
+        <div class="col-sm-8 btn-group rounded">
           <input
-            class="btn btn-light url-input-field rounded text-left"
+            class="btn btn-light url-input-field text-left"
             type="url"
             id="longurl"
             placeholder="LongUrl"
@@ -89,7 +139,14 @@
 
       <!-- SHORT URL ROW -->
       <div class="row justify-content-md-center">
-        <div class="col col-12 mt-4">
+        <div
+          class="alert alert-danger col col-12 d-none mt-4 justify-content-center mx-3"
+          id="alert-bad-url"
+          role="alert"
+        >
+          INVALID URL
+        </div>
+        <div class="col col-12 mt-4 d-flex justify-content-center">
           <div class="label-url" id="shorturl">Input URL Above</div>
         </div>
       </div>
@@ -101,6 +158,13 @@
   <script>
     const onClickSubmit = async () => {
       let longurl = document.getElementById("longurl").value;
+      if (!longurl.includes(".")) {
+        document.getElementById("alert-bad-url").classList.remove("d-none");
+        setTimeout(() => {
+          document.getElementById("alert-bad-url").classList.add("d-none");
+        }, 1900);
+        return;
+      }
 
       //SENDING URL TO BACKEND
       let options = {
@@ -114,8 +178,8 @@
         let response = await fetch("api/rand", options); // resolves with response headers
         let result = await response.json(); // read body as json
         let shortenedURL = "http://localhost:8080/" + result.shorturl;
-        let addUrlToHtml = `Generated Url: ${shortenedURL}`;
-        addUrlToHtml += `<button class="btn btn-secondary btn-copy" onclick="copyText('${shortenedURL}')">Copy to Clipboard</button>`;
+        let addUrlToHtml = `<div>Generated URL</div> <div>${shortenedURL}</div>`;
+        addUrlToHtml += `<button id="copy-btn-id" class="btn btn-secondary btn-copy" onclick="copyText('${shortenedURL}')">Copy to Clipboard</button>`;
         document.getElementById("shorturl").innerHTML = addUrlToHtml;
       } catch {
         document.getElementById("shorturl").innerHTML = "ERROR OCCURED";
@@ -127,22 +191,6 @@
     // DEALING WITH COPY BUTTON
     const copyText = (text) => {
       var textArea = document.createElement("textarea");
-
-      //
-      // *** This styling is an extra step which is likely not required. ***
-      //
-      // Why is it here? To ensure:
-      // 1. the element is able to have focus and selection.
-      // 2. if element was to flash render it has minimal visual impact.
-      // 3. less flakyness with selection and copying which **might** occur if
-      //    the textarea element is not visible.
-      //
-      // The likelihood is the element won't even render, not even a
-      // flash, so some of these are just precautions. However in
-      // Internet Explorer the element is visible whilst the popup
-      // box asking the user for permission for the web page to
-      // copy to the clipboard.
-      //
 
       // Place in top-left corner of screen regardless of scroll position.
       textArea.style.position = "fixed";
@@ -172,12 +220,19 @@
       textArea.select();
 
       try {
-        var successful = document.execCommand("copy");
-        var msg = successful ? "successful" : "unsuccessful";
-        console.log("Copying text command was " + msg);
-        alert("Copied the text: " + text);
+        let successful = document.execCommand("copy");
+        let msg = successful ? "successful" : "unsuccessful";
+        if (successful) {
+          document.getElementById("copy-btn-id").classList.add("disabled");
+          document.getElementById(
+            "copy-btn-id"
+          ).innerHTML = `Copied <i class="fa fa-check copied-check" aria-hidden="true"></i>`;
+        }
+
+        //alert(text + " Copied to Clipboard");
       } catch (err) {
         console.log("Oops, unable to copy");
+        alert("Looks like your browser does not support this action!");
       }
 
       document.body.removeChild(textArea);
