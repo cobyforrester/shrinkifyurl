@@ -219,10 +219,7 @@
         body: JSON.stringify({ longurl: longurl, n: n }),
       };
       try {
-        let response = await fetch(
-          "https://shrinkifyurl.herokuapp.com/api/rand",
-          options
-        ); // resolves with response headers
+        let response = await fetch("api/rand", options); // resolves with response headers
         let result = await response.json(); // read body as json
         let shortenedURL =
           "https://shrinkifyurl.herokuapp.com/" + result.shorturl;
