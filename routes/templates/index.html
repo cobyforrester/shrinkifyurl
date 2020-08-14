@@ -213,7 +213,8 @@
 
     const onClickSubmit = async () => {
       let longurl = document.getElementById("longurl").value;
-      if (!longurl.includes(".")) {
+      longurl = longurl.trim();
+      if (!longurl.includes(".") || longurl.includes(" ")) {
         document.getElementById("alert-bad-url").classList.remove("d-none");
         setTimeout(() => {
           document.getElementById("alert-bad-url").classList.add("d-none");
