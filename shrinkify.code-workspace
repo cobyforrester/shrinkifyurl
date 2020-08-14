@@ -2,6 +2,9 @@
 	"folders": [
 		{
 			"path": "."
+		},
+		{
+			"path": "../../../../../Downloads/shrinkifyurl-master/node_modules"
 		}
 	],
 	"settings": {}
