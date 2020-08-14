@@ -29,6 +29,9 @@
         color: black;
         margin: 0 0 1rem;
       }
+      .shorturl-text {
+        font-size: 1.3rem !important;
+      }
       .url-input-field {
         height: 50px;
         background-color: white !important;
@@ -80,20 +83,25 @@
           width: 100px;
           background-color: white !important;
         }
-
         .label-url {
           font-size: 1.4rem;
           font-weight: 400;
           color: black;
           margin: 0 0 1rem;
         }
+        .shorturl-text {
+          font-size: 1rem !important;
+        }
       }
-      @media screen and (max-width: 350px) {
+      @media screen and (max-width: 330px) {
         .label-url {
           font-size: 1rem;
           font-weight: 400;
           color: black;
           margin: 0 0 1rem;
+        }
+        .shorturl-text {
+          font-size: 0.75rem !important;
         }
       }
     </style>
@@ -153,7 +161,7 @@
       <!-- END SHORT URL ROW -->
       <!-- OPTIONS ROW -->
       <div class="row justify-content-md-center">
-        <div class="col-sm-5 justify-content-center">
+        <div class="col-sm-12 justify-content-center">
           <div class="form-check">
             <input
               class="form-check-input"
@@ -223,7 +231,7 @@
         let result = await response.json(); // read body as json
         let shortenedURL =
           "https://shrinkifyurl.herokuapp.com/" + result.shorturl;
-        let addUrlToHtml = `<div>Generated URL</div> <div>${shortenedURL}</div>`;
+        let addUrlToHtml = `<div>Generated URL</div> <div class="shorturl-text my-1">${shortenedURL}</div>`;
         addUrlToHtml += `<button id="copy-btn-id" class="btn btn-secondary btn-copy" onclick="copyText('${shortenedURL}')">Copy to Clipboard</button>`;
         document.getElementById("shorturl").innerHTML = addUrlToHtml;
       } catch {
