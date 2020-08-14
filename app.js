@@ -17,7 +17,6 @@ mongoose
   });
 
 //ROUTES
-const incrShortenURL = require("./routes/incrShorteningURL");
 const randShortenURL = require("./routes/randShorteningURL");
 const homeRoute = require("./routes/home");
 const redirectRoute = require("./routes/redirect");
@@ -26,7 +25,6 @@ const redirectRoute = require("./routes/redirect");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use("/api/incr", incrShortenURL);
 app.use("/api/rand", randShortenURL);
 app.use("/", homeRoute);
 app.use(redirectRoute); //default for the shortened urls
