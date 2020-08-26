@@ -151,9 +151,7 @@
           id="alert-bad-url"
           role="alert"
         >
-          <h3 class="text-danger">
-            INVALID URL
-          </h3>
+          <h3 class="text-danger">INVALID URL</h3>
         </div>
         <div class="col col-12 mt-4 d-flex justify-content-center">
           <div class="label-url" id="shorturl"></div>
@@ -234,8 +232,7 @@
       try {
         let response = await fetch("api/rand", options); // resolves with response headers
         let result = await response.json(); // read body as json
-        let shortenedURL =
-          "https://shrinkifyurl.herokuapp.com/" + result.shorturl;
+        let shortenedURL = "https://shrinkifyurl.com/" + result.shorturl;
         let addUrlToHtml = `<div>Generated URL</div> <div class="shorturl-text my-1">${shortenedURL}</div>`;
         addUrlToHtml += `<button id="copy-btn-id" class="btn btn-secondary btn-copy" onclick="copyText('${shortenedURL}')">Copy to Clipboard</button>`;
         document.getElementById("shorturl").innerHTML = addUrlToHtml;
