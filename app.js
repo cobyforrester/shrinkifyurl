@@ -30,5 +30,6 @@ app.use("/", homeRoute);
 app.use(redirectRoute); //default for the shortened urls
 
 //START SERVER
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 8081;
 app.listen(port);
+console.log(`On Port ${port}`);
