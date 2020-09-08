@@ -4,6 +4,7 @@ const router = express.Router();
 const RandURL = require("../models/RandURL");
 
 router.get("*", async (req, res) => {
+  console.log("IN REDIRECT");
   try {
     let url = req.url.slice(1, req.url.length);
     const urlQs = await RandURL.findOne({ shorturl: url });
