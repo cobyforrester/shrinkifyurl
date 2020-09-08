@@ -32,4 +32,3 @@ app.use(redirectRoute); //default for the shortened urls
 //START SERVER
 const port = process.env.PORT || 8080;
 app.listen(port);
-server.keepAliveTimeout = 75000;
