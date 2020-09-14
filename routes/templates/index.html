@@ -185,9 +185,10 @@
               value="option2"
             />
             <label class="form-check-label" onClick="" for="exampleRadios2">
-              Shortest Possible URL (also riskiest)
+              Shortest Possible URL
             </label>
           </div>
+          <p class="pt-2">(Short URL is riskier, but risk is very small)</p>
         </div>
       </div>
       <!-- END OPTIONS ROW -->
@@ -196,12 +197,21 @@
   </body>
 
   <script>
-    //NUMBER OF CHARS FOR URL TO TRY FOR
+    //Default Type
     let type = "quick";
 
     const changeN = (btn) => {
       type = btn;
     };
+
+    let input = document.getElementsByClassName("url-input-field")[0];
+    console.log(input);
+    input.addEventListener("keyup", function (event) {
+      if (event.keyCode === 13) {
+        event.preventDefault();
+        document.getElementsByClassName("url-submit-btn")[0].click();
+      }
+    });
 
     const onClickSubmit = async () => {
       let longurl = document.getElementById("longurl").value;

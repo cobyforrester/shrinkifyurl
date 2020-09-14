@@ -5,7 +5,6 @@ const router = express.Router();
 const RandURL = require("../models/RandURL");
 
 router.post("/", async (req, res) => {
-  console.log("RAND REQUEST", req.body);
   try {
     const urlItem = await RandURL.findOne({ longurl: req.body.longurl });
     if (urlItem) {
