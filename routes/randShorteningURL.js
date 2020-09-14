@@ -16,7 +16,7 @@ router.post("/", async (req, res) => {
     console.log(err);
   }
   let longurl = req.body.longurl;
-  let n = 5;
+  let n = 7;
   let shorturl = await createShortenedURL(longurl, n);
   const elem = new RandURL({
     longurl: longurl,
