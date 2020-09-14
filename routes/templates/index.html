@@ -200,14 +200,10 @@
 
   <script>
     //NUMBER OF CHARS FOR URL TO TRY FOR
-    let n = 5;
+    let type = "quick";
 
     const changeN = (btn) => {
-      if (btn === "quick") {
-        n = 5;
-      } else if (btn === "short") {
-        n = 1;
-      }
+      type = btn;
     };
 
     const onClickSubmit = async () => {
@@ -227,10 +223,11 @@
           "Content-Type": "application/json",
         },
         method: "POST",
-        body: JSON.stringify({ longurl: longurl, n: n }),
+        body: JSON.stringify({ longurl: longurl }),
       };
+      let endpoint = `api/${type}`;
       try {
-        let response = await fetch("api/rand", options); // resolves with response headers
+        let response = await fetch(endpoint, options); // resolves with response headers
         let result = await response.json(); // read body as json
         let shortenedURL = "https://shrinkifyurl.com/" + result.shorturl;
         let addUrlToHtml = `<div>Generated URL</div> <div class="shorturl-text my-1">${shortenedURL}</div>`;

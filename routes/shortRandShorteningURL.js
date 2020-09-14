@@ -2,12 +2,11 @@ const express = require("express");
 const crypto = require("crypto");
 const router = express.Router();
 
-const RandURL = require("../models/RandURL");
+const QuickRandURL = require("../models/QuickRandURL");
 
 router.post("/", async (req, res) => {
-  console.log("RAND REQUEST", req.body);
   try {
-    const urlItem = await RandURL.findOne({ longurl: req.body.longurl });
+    const urlItem = await QuickRandURL.findOne({ longurl: req.body.longurl });
     if (urlItem) {
       res.json(urlItem);
       return;
@@ -16,9 +15,9 @@ router.post("/", async (req, res) => {
     console.log(err);
   }
   let longurl = req.body.longurl;
-  let n = 5;
+  let n = 1;
   let shorturl = await createShortenedURL(longurl, n);
-  const elem = new RandURL({
+  const elem = new QuickRandURL({
     longurl: longurl,
     shorturl: shorturl,
   });
@@ -39,11 +38,11 @@ router.post("/", async (req, res) => {
 const createShortenedURL = async (longurl, n) => {
   let shorturl = createHash(longurl);
   let shorturlFnl = shorturl.slice(shorturl.length - n, shorturl.length);
-  let urlItem = await RandURL.findOne({ shorturl: shorturlFnl });
+  let urlItem = await QuickRandURL.findOne({ shorturl: shorturlFnl });
   while (urlItem) {
     n += 1;
     shorturlFnl = shorturl.slice(shorturl.length - n, shorturl.length);
-    urlItem = await RandURL.findOne({ shorturl: shorturlFnl });
+    urlItem = await QuickRandURL.findOne({ shorturl: shorturlFnl });
   }
   return shorturlFnl;
 };
