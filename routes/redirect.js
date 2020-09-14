@@ -7,7 +7,7 @@ const ShortRandURL = require("../models/ShortRandURL");
 router.get("*", async (req, res) => {
   try {
     let url = req.url.slice(1, req.url.length);
-    const urlQs;
+    let urlQs;
     if (url.length < 7) {
       urlQs = await ShortRandURL.findOne({ shorturl: url });
     } else {
