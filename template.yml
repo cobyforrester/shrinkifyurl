@@ -1,0 +1,42 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  simple-node-api
+  Sample SAM Template for simple-node-api
+
+Globals:
+  Function:
+    Timeout: 3
+Parameters:
+  DBConnection:
+    Type: String
+    Default: NA
+
+Resources:
+  ShrinkifyURL:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ./
+      Handler: app.handler
+      Runtime: nodejs14.x
+      Events:
+        Shrinkify:
+          Type: HttpApi
+          Properties:
+            Path: /{proxy+}
+            Method: any
+      Environment:
+        Variables:
+          DB_CONNECTION: !Ref DBConnection
+
+Outputs:
+  ShrinkifyApi:
+    Description: API Gateway endpoint URL for Prod stage for Hello World function
+    Value:
+      Fn::Sub: https://${ServerlessHttpApi}.execute-api.${AWS::Region}.amazonaws.com/
+  ShrinkifyURLFunction:
+    Description: Express Backend Lambda Function ARN
+    Value: !Sub ShrinkifyURL.Arn
+  ShrinkifyURLIamRole:
+    Description: Implicit IAM Role created for Hello World function
+    Value: !Sub ShrinkifyURLFunctionRole.Arn

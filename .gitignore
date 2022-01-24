@@ -15,7 +15,6 @@ Desktop.ini
 
 # npm
 node_modules
-package-lock.json
 build
 npm-debug.log
 *.log
@@ -29,3 +28,5 @@ coverage
 benchmarks/graphs
 
 .env
+.aws-sam
+*.toml

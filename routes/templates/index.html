@@ -1,299 +1,300 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>ShrinkifyURL</title>
-    <style>
-      @import url("https://fonts.googleapis.com/css?family=Lato:400,700");
-      * {
-        font-family: Lato;
-        background-color: rgb(233, 233, 233) !important;
-      }
+	<head>
+		<title>ShrinkifyURL</title>
+		<style>
+			@import url('https://fonts.googleapis.com/css?family=Lato:400,700');
+			* {
+				font-family: Lato;
+				background-color: rgb(233, 233, 233) !important;
+			}
 
-      #alert-bad-url {
-        flex: auto;
-        max-width: 500px;
-      }
-      .main-header {
-        font-size: 3rem;
-        font-weight: 700;
-        color: black;
-        margin: 0 0 5rem;
-        /* UNDERLINING HEADER */
-        border-bottom: 2px solid currentColor;
-        display: inline-block;
-      }
-      .label-url {
-        font-size: 1.85rem;
-        font-weight: 400;
-        color: black;
-        margin: 0 0 1rem;
-      }
-      .shorturl-text {
-        font-size: 1.3rem !important;
-      }
-      .url-input-field {
-        height: 50px;
-        background-color: white !important;
-        /* FOR SAFARI INPUT */
-        -webkit-user-select: text !important; /* Chrome, Opera, Safari */
-        -moz-user-select: text !important; /* Firefox 2+ */
-        -ms-user-select: text !important; /* IE 10+ */
-        user-select: text !important; /* Standard syntax */
-      }
-      .url-input-field:hover {
-        border-width: 2px;
-        border-color: grey;
-      }
-      .url-input-field:focus {
-        border-width: 2px !important;
-        border-color: grey !important;
-        box-shadow: none !important;
-      }
-      .url-submit-btn {
-        height: 50px;
-        max-width: 100px;
-        position: relative;
-        background-color: #007bff !important;
-      }
-      .url-submit-btn:hover {
-        background-color: #0069d9 !important;
-      }
-      .btn-copy {
-        background-color: #6c757d !important;
-        margin-bottom: 3px;
-        margin-left: 10px;
-      }
-      .btn-copy:hover {
-        background-color: #5a6268 !important;
-      }
-      .copied-check {
-        background-color: transparent !important;
-      }
+			#alert-bad-url {
+				flex: auto;
+				max-width: 500px;
+			}
+			.main-header {
+				font-size: 3rem;
+				font-weight: 700;
+				color: black;
+				margin: 0 0 5rem;
+				/* UNDERLINING HEADER */
+				border-bottom: 2px solid currentColor;
+				display: inline-block;
+			}
+			.label-url {
+				font-size: 1.85rem;
+				font-weight: 400;
+				color: black;
+				margin: 0 0 1rem;
+			}
+			.shorturl-text {
+				font-size: 1.3rem !important;
+			}
+			.url-input-field {
+				height: 50px;
+				background-color: white !important;
+				/* FOR SAFARI INPUT */
+				-webkit-user-select: text !important; /* Chrome, Opera, Safari */
+				-moz-user-select: text !important; /* Firefox 2+ */
+				-ms-user-select: text !important; /* IE 10+ */
+				user-select: text !important; /* Standard syntax */
+			}
+			.url-input-field:hover {
+				border-width: 2px;
+				border-color: grey;
+			}
+			.url-input-field:focus {
+				border-width: 2px !important;
+				border-color: grey !important;
+				box-shadow: none !important;
+			}
+			.url-submit-btn {
+				height: 50px;
+				max-width: 100px;
+				position: relative;
+				background-color: #007bff !important;
+			}
+			.url-submit-btn:hover {
+				background-color: #0069d9 !important;
+			}
+			.btn-copy {
+				background-color: #6c757d !important;
+				margin-bottom: 3px;
+				margin-left: 10px;
+			}
+			.btn-copy:hover {
+				background-color: #5a6268 !important;
+			}
+			.copied-check {
+				background-color: transparent !important;
+			}
 
-      @media screen and (max-width: 500px) {
-        .main-header {
-          font-size: 2.5rem;
-        }
-        .url-submit-btn {
-          flex-wrap: wrap;
-          width: 70px;
-        }
-        .url-input-field {
-          width: 100px;
-          background-color: white !important;
-        }
-        .label-url {
-          font-size: 1.4rem;
-          font-weight: 400;
-          color: black;
-          margin: 0 0 1rem;
-        }
-        .shorturl-text {
-          font-size: 1rem !important;
-        }
-      }
-      @media screen and (max-width: 330px) {
-        .label-url {
-          font-size: 1rem;
-          font-weight: 400;
-          color: black;
-          margin: 0 0 1rem;
-        }
-        .shorturl-text {
-          font-size: 0.75rem !important;
-        }
-      }
-    </style>
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
-  </head>
-  <body class="text-center">
-    <!-- NAVBAR -->
-    <nav class="navbar navbar-light bg-dark">
-      <div class="navbar-brand text-light ml-3 bg-dark">ShrinkifyURL</div>
-    </nav>
+			@media screen and (max-width: 500px) {
+				.main-header {
+					font-size: 2.5rem;
+				}
+				.url-submit-btn {
+					flex-wrap: wrap;
+					width: 70px;
+				}
+				.url-input-field {
+					width: 100px;
+					background-color: white !important;
+				}
+				.label-url {
+					font-size: 1.4rem;
+					font-weight: 400;
+					color: black;
+					margin: 0 0 1rem;
+				}
+				.shorturl-text {
+					font-size: 1rem !important;
+				}
+			}
+			@media screen and (max-width: 330px) {
+				.label-url {
+					font-size: 1rem;
+					font-weight: 400;
+					color: black;
+					margin: 0 0 1rem;
+				}
+				.shorturl-text {
+					font-size: 0.75rem !important;
+				}
+			}
+		</style>
+		<link
+			rel="stylesheet"
+			href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+			integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+			crossorigin="anonymous"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+		/>
+	</head>
+	<body class="text-center">
+		<!-- NAVBAR -->
+		<nav class="navbar navbar-light bg-dark">
+			<div class="navbar-brand text-light ml-3 bg-dark">ShrinkifyURL</div>
+		</nav>
 
-    <!-- MAIN CONTENTS -->
-    <div class="container py-1">
-      <h1 class="pt-4 main-header underline">ShrinkifyURL</h1>
+		<!-- MAIN CONTENTS -->
+		<div class="container py-1">
+			<h1 class="pt-4 main-header underline">ShrinkifyURL</h1>
 
-      <!-- INPUT ROW -->
-      <div class="row justify-content-center">
-        <div class="col-sm-8 btn-group rounded">
-          <input
-            class="btn btn-light url-input-field text-left"
-            type="url"
-            id="longurl"
-            placeholder="Enter URL to Shorten"
-          />
-          <button
-            onclick="onClickSubmit()"
-            class="btn btn-primary url-submit-btn"
-          >
-            Submit
-          </button>
-        </div>
-      </div>
-      <!-- END INPUT ROW -->
+			<!-- INPUT ROW -->
+			<div class="row justify-content-center">
+				<div class="col-sm-8 btn-group rounded">
+					<input
+						class="btn btn-light url-input-field text-left"
+						type="url"
+						id="longurl"
+						placeholder="Enter URL to Shorten"
+					/>
+					<button
+						onclick="onClickSubmit()"
+						class="btn btn-primary url-submit-btn"
+					>
+						Submit
+					</button>
+				</div>
+			</div>
+			<!-- END INPUT ROW -->
 
-      <!-- SHORT URL ROW -->
-      <div class="row justify-content-md-center">
-        <div
-          class="col col-12 d-none mt-4 justify-content-center mx-3"
-          id="alert-bad-url"
-          role="alert"
-        >
-          <h3 class="text-danger">INVALID URL</h3>
-        </div>
-        <div class="col col-12 mt-4 d-flex justify-content-center">
-          <div class="label-url" id="shorturl"></div>
-        </div>
-      </div>
-      <!-- END SHORT URL ROW -->
-      <!-- OPTIONS ROW -->
-      <div class="row justify-content-md-center">
-        <div class="col-sm-12 justify-content-center">
-          <div class="form-check">
-            <input
-              class="form-check-input"
-              type="radio"
-              name="exampleRadios"
-              id="exampleRadios1"
-              value="option1"
-              onClick="changeN('quick')"
-              checked
-            />
-            <label class="form-check-label" for="exampleRadios1">
-              Quick Generating URL
-            </label>
-          </div>
-          <div class="form-check">
-            <input
-              class="form-check-input"
-              type="radio"
-              name="exampleRadios"
-              id="exampleRadios2"
-              onClick="changeN('short')"
-              value="option2"
-            />
-            <label class="form-check-label" onClick="" for="exampleRadios2">
-              Shortest Possible URL
-            </label>
-          </div>
-          <p class="pt-2">(Short URL is riskier, but risk is very small)</p>
-        </div>
-      </div>
-      <!-- END OPTIONS ROW -->
-    </div>
-    <!-- END MAIN CONTENTS -->
-  </body>
+			<!-- SHORT URL ROW -->
+			<div class="row justify-content-md-center">
+				<div
+					class="col col-12 d-none mt-4 justify-content-center mx-3"
+					id="alert-bad-url"
+					role="alert"
+				>
+					<h3 class="text-danger">INVALID URL</h3>
+				</div>
+				<div class="col col-12 mt-4 d-flex justify-content-center">
+					<div class="label-url" id="shorturl"></div>
+				</div>
+			</div>
+			<!-- END SHORT URL ROW -->
+			<!-- OPTIONS ROW -->
+			<div class="row justify-content-md-center">
+				<div class="col-sm-12 justify-content-center">
+					<div class="form-check">
+						<input
+							class="form-check-input"
+							type="radio"
+							name="exampleRadios"
+							id="exampleRadios1"
+							value="option1"
+							onClick="changeN('quick')"
+							checked
+						/>
+						<label class="form-check-label" for="exampleRadios1">
+							Quick Generating URL
+						</label>
+					</div>
+					<div class="form-check">
+						<input
+							class="form-check-input"
+							type="radio"
+							name="exampleRadios"
+							id="exampleRadios2"
+							onClick="changeN('short')"
+							value="option2"
+						/>
+						<label class="form-check-label" onClick="" for="exampleRadios2">
+							Shortest Possible URL
+						</label>
+					</div>
+					<p class="pt-2">(Short URL is riskier, but risk is very small)</p>
+				</div>
+			</div>
+			<!-- END OPTIONS ROW -->
+		</div>
+		<!-- END MAIN CONTENTS -->
+	</body>
 
-  <script>
-    //Default Type
-    let type = "quick";
+	<script>
+		//Default Type
+		let type = 'quick'
 
-    const changeN = (btn) => {
-      type = btn;
-    };
+		const changeN = (btn) => {
+			type = btn
+		}
 
-    let input = document.getElementsByClassName("url-input-field")[0];
-    input.addEventListener("keyup", function (event) {
-      if (event.keyCode === 13) {
-        event.preventDefault();
-        document.getElementsByClassName("url-submit-btn")[0].click();
-      }
-    });
+		let input = document.getElementsByClassName('url-input-field')[0]
+		input.addEventListener('keyup', function (event) {
+			if (event.keyCode === 13) {
+				event.preventDefault()
+				document.getElementsByClassName('url-submit-btn')[0].click()
+			}
+		})
 
-    const onClickSubmit = async () => {
-      let longurl = document.getElementById("longurl").value;
-      longurl = longurl.trim();
-      if (!longurl.includes(".") || longurl.includes(" ")) {
-        document.getElementById("alert-bad-url").classList.remove("d-none");
-        setTimeout(() => {
-          document.getElementById("alert-bad-url").classList.add("d-none");
-        }, 2500);
-        return;
-      }
+		const onClickSubmit = async () => {
+			let longurl = document.getElementById('longurl').value
+			longurl = longurl.trim()
+			if (!longurl.includes('.') || longurl.includes(' ')) {
+				document.getElementById('alert-bad-url').classList.remove('d-none')
+				setTimeout(() => {
+					document.getElementById('alert-bad-url').classList.add('d-none')
+				}, 2500)
+				return
+			}
 
-      //SENDING URL TO BACKEND
-      let options = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "POST",
-        body: JSON.stringify({ longurl: longurl }),
-      };
-      let endpoint = `api/${type}`;
-      try {
-        let response = await fetch(endpoint, options); // resolves with response headers
-        let result = await response.json(); // read body as json
-        let shortenedURL = "https://shrinkifyurl.com/" + result.shorturl;
-        let addUrlToHtml = `<div>Generated URL</div> <div class="shorturl-text my-1">${shortenedURL}</div>`;
-        addUrlToHtml += `<button id="copy-btn-id" class="btn btn-secondary btn-copy" onclick="copyText('${shortenedURL}')">Copy to Clipboard</button>`;
-        document.getElementById("shorturl").innerHTML = addUrlToHtml;
-      } catch {
-        document.getElementById("shorturl").innerHTML = "ERROR OCCURED";
-      }
+			//SENDING URL TO BACKEND
+			let options = {
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				method: 'POST',
+				body: JSON.stringify({ longurl: longurl }),
+			}
+			let endpoint = `api/${type}`
+			try {
+				let response = await fetch(endpoint, options) // resolves with response headers
+				let result = await response.json() // read body as json
+				console.log(result)
+				let shortenedURL = window.location.href + result.shorturl
+				let addUrlToHtml = `<div>Generated URL</div> <div class="shorturl-text my-1">${shortenedURL}</div>`
+				addUrlToHtml += `<button id="copy-btn-id" class="btn btn-secondary btn-copy" onclick="copyText('${shortenedURL}')">Copy to Clipboard</button>`
+				document.getElementById('shorturl').innerHTML = addUrlToHtml
+			} catch {
+				document.getElementById('shorturl').innerHTML = 'ERROR OCCURED'
+			}
 
-      document.getElementById("longurl").value = "";
-    };
+			document.getElementById('longurl').value = ''
+		}
 
-    // DEALING WITH COPY BUTTON
-    const copyText = (text) => {
-      var textArea = document.createElement("textarea");
+		// DEALING WITH COPY BUTTON
+		const copyText = (text) => {
+			var textArea = document.createElement('textarea')
 
-      // Place in top-left corner of screen regardless of scroll position.
-      textArea.style.position = "fixed";
-      textArea.style.top = 0;
-      textArea.style.left = 0;
+			// Place in top-left corner of screen regardless of scroll position.
+			textArea.style.position = 'fixed'
+			textArea.style.top = 0
+			textArea.style.left = 0
 
-      // Ensure it has a small width and height. Setting to 1px / 1em
-      // doesn't work as this gives a negative w/h on some browsers.
-      textArea.style.width = "2em";
-      textArea.style.height = "2em";
+			// Ensure it has a small width and height. Setting to 1px / 1em
+			// doesn't work as this gives a negative w/h on some browsers.
+			textArea.style.width = '2em'
+			textArea.style.height = '2em'
 
-      // We don't need padding, reducing the size if it does flash render.
-      textArea.style.padding = 0;
+			// We don't need padding, reducing the size if it does flash render.
+			textArea.style.padding = 0
 
-      // Clean up any borders.
-      textArea.style.border = "none";
-      textArea.style.outline = "none";
-      textArea.style.boxShadow = "none";
+			// Clean up any borders.
+			textArea.style.border = 'none'
+			textArea.style.outline = 'none'
+			textArea.style.boxShadow = 'none'
 
-      // Avoid flash of white box if rendered for any reason.
-      textArea.style.background = "transparent";
+			// Avoid flash of white box if rendered for any reason.
+			textArea.style.background = 'transparent'
 
-      textArea.value = text;
+			textArea.value = text
 
-      document.body.appendChild(textArea);
-      textArea.focus();
-      textArea.select();
+			document.body.appendChild(textArea)
+			textArea.focus()
+			textArea.select()
 
-      try {
-        let successful = document.execCommand("copy");
-        let msg = successful ? "successful" : "unsuccessful";
-        if (successful) {
-          document.getElementById("copy-btn-id").classList.add("disabled");
-          document.getElementById(
-            "copy-btn-id"
-          ).innerHTML = `Copied <i class="fa fa-check copied-check" aria-hidden="true"></i>`;
-        }
+			try {
+				let successful = document.execCommand('copy')
+				let msg = successful ? 'successful' : 'unsuccessful'
+				if (successful) {
+					document.getElementById('copy-btn-id').classList.add('disabled')
+					document.getElementById(
+						'copy-btn-id'
+					).innerHTML = `Copied <i class="fa fa-check copied-check" aria-hidden="true"></i>`
+				}
 
-        //alert(text + " Copied to Clipboard");
-      } catch (err) {
-        console.log("Oops, unable to copy");
-        alert("Looks like your browser does not support this action!");
-      }
+				//alert(text + " Copied to Clipboard");
+			} catch (err) {
+				console.log('Oops, unable to copy')
+				alert('Looks like your browser does not support this action!')
+			}
 
-      document.body.removeChild(textArea);
-    };
-  </script>
+			document.body.removeChild(textArea)
+		}
+	</script>
 </html>
