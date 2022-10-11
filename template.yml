@@ -1,8 +1,7 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: >
-  simple-node-api
-  Sample SAM Template for simple-node-api
+  Shrinkify URL
 
 Globals:
   Function:
@@ -16,27 +15,50 @@ Resources:
   ShrinkifyURL:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: ./
-      Handler: app.handler
-      Runtime: nodejs14.x
+      CodeUri: ./api
+      Handler: main.handler
+      Runtime: go1.x
+      Timeout: 50
       Events:
-        Shrinkify:
+        API:
           Type: HttpApi
           Properties:
             Path: /{proxy+}
             Method: any
+        HTML:
+          Type: HttpApi
+          Properties:
+            Path: /
+            Method: get
       Environment:
         Variables:
-          DB_CONNECTION: !Ref DBConnection
+          DYNAMO_TABLE: !Ref DBConnection
+
+  DynamoDBTable:
+    Type: AWS::DynamoDB::Table
+    Properties: 
+      TableName: shrinkifyurl
+      AttributeDefinitions: 
+        - AttributeName: PK
+          AttributeType: S
+        - AttributeName: SK
+          AttributeType: S
+      KeySchema: 
+        - AttributeName: PK
+          KeyType: HASH
+        - AttributeName: SK
+          KeyType: RANGE
+      BillingMode: PAY_PER_REQUEST
+
 
 Outputs:
   ShrinkifyApi:
-    Description: API Gateway endpoint URL for Prod stage for Hello World function
+    Description: API Gateway endpoint URL for Prod for Shrinkify URL function
     Value:
       Fn::Sub: https://${ServerlessHttpApi}.execute-api.${AWS::Region}.amazonaws.com/
   ShrinkifyURLFunction:
     Description: Express Backend Lambda Function ARN
     Value: !Sub ShrinkifyURL.Arn
   ShrinkifyURLIamRole:
-    Description: Implicit IAM Role created for Hello World function
+    Description: Implicit IAM Role created for Shrinkify URL function
     Value: !Sub ShrinkifyURLFunctionRole.Arn

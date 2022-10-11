@@ -1,0 +1,12 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "shrinkifyurl"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-1qyt3k59alk7r"
+s3_prefix = "shrinkifyurl"
+region = "us-east-1"
+profile = "coby"
+capabilities = "CAPABILITY_IAM"
+parameter_overrides = "DBConnection=\"NA\""
+image_repositories = []
